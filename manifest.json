@@ -1,0 +1,28 @@
+{
+	"manifest_version": 2,
+	"name": "Energy Air Bot 2019",
+	"description": "A Chrome Extension to auto-solve the Energy Air Game in order to win tickets",
+	"version": "1.0",
+	"browser_action": {
+		"default_icon": "icon128.png",
+		"default_popup": "popup.html",
+		"default_title": "Energy Air Bot 2019"
+	},
+	"icons": {
+		"16": "icon16.png",
+		"48": "icon48.png",
+		"128": "icon128.png"
+	},
+	"permissions": ["activeTab", "https://ajax.googleapis.com/"],
+	"background": {
+		"scripts": ["background.js"]
+	},
+
+	"content_scripts": [
+		{
+			"matches": ["https://game.energy.ch/*", "http://game.energy.ch/*"],
+			"js": ["script.js"]
+		}
+	],
+	"web_accessible_resources": ["script.js"]
+}
