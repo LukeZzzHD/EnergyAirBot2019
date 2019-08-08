@@ -34,6 +34,14 @@ const qna = {
 	'WANN FINDET DAS ENERGY AIR 2019 STATT?': '7. September 2019'
 };
 
+function randomNumber(min, max) {  
+    return Math.floor(Math.random() * (max - min) + min); 
+} 
+
+function getRandomMiliseconds(from, to) {
+	return randomNumber(from, to);
+}
+
 function start() {
 	//function to start the bot (solve the quiz and try to guess the right bubble)
 	let counter = 0;
@@ -48,9 +56,9 @@ function start() {
 			});
 		} else {
 			counter++;
-			solve();
+			setTimeout(solve, getRandomMiliseconds(100, 500));
 		}
-	}, 200);
+	}, getRandomMiliseconds(1234, 3210));
 }
 
 //wait for element to exist, then execute callback
@@ -103,7 +111,7 @@ function chooseBubble() {
 	return new Promise((resolve, reject) => {
 		setTimeout(() => {
 			resolve();
-		}, 2000);
+		}, getRandomMiliseconds(1500, 2500));
 	});
 }
 
@@ -126,7 +134,7 @@ function restart() {
 		$('#lose').click();
 	});
 
-	setTimeout(start, 500);
+	setTimeout(start, getRandomMiliseconds(500, 1000));
 }
 
 //call the start function
