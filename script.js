@@ -105,7 +105,8 @@ function chooseBubble() {
 	}, 500);
 
 	waitForEl('.circle img', () => {
-		$('.circle img')[0].click();
+		let id = Math.floor(Math.random() * 11);
+		$('.circle img')[id].click();
 	});
 
 	return new Promise((resolve, reject) => {
