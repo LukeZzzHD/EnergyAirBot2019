@@ -34,13 +34,13 @@ const qna = {
 	'WANN FINDET DAS ENERGY AIR 2019 STATT?': '7. September 2019'
 };
 
-function randomNumber(min, max) {  
+/*function randomNumber(min, max) {  
     return Math.floor(Math.random() * (max - min) + min); 
 } 
 
 function getRandomMiliseconds(from, to) {
 	return randomNumber(from, to);
-}
+}*/
 
 function start() {
 	//function to start the bot (solve the quiz and try to guess the right bubble)
@@ -56,9 +56,9 @@ function start() {
 			});
 		} else {
 			counter++;
-			setTimeout(solve, getRandomMiliseconds(100, 500));
+			setTimeout(solve, 100);
 		}
-	}, getRandomMiliseconds(1234, 3210));
+	}, 250);
 }
 
 //wait for element to exist, then execute callback
@@ -79,9 +79,15 @@ function solve() {
 		var question = $('.question-text')
 			.text()
 			.toUpperCase();
-		console.log(`Question: ${question}`);
 		var answer = qna[question];
-		console.log(`Answer: ${answer}`);
+
+		chrome.storage.local.get(['logging'], result => {
+			if(result.logging === 'on') {
+				console.log(`Question: ${question}`);
+				console.log(`Answer: ${answer}`);
+			}
+		});
+
 		var inputs = Array.from(document.querySelectorAll('.radio-button'));
 		var input = $(inputs.filter(i => i.id == answer)[0]);
 		input.click();
@@ -112,7 +118,7 @@ function chooseBubble() {
 	return new Promise((resolve, reject) => {
 		setTimeout(() => {
 			resolve();
-		}, getRandomMiliseconds(1500, 2500));
+		}, 100);
 	});
 }
 
@@ -135,7 +141,7 @@ function restart() {
 		$('#lose').click();
 	});
 
-	setTimeout(start, getRandomMiliseconds(500, 1000));
+	setTimeout(start, 100);
 }
 
 //call the start function

@@ -13,7 +13,7 @@
 		"48": "icon48.png",
 		"128": "icon128.png"
 	},
-	"permissions": ["activeTab", "https://ajax.googleapis.com/"],
+	"permissions": ["activeTab", "https://ajax.googleapis.com/", "storage"],
 	"background": {
 		"scripts": ["background.js"]
 	},

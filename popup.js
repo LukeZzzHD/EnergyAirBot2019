@@ -1,22 +1,35 @@
-const getLoggingState = () => localStorage.getItem('logging');
-const setLoggingState = state => localStorage.setItem('logging', state);
+const getLoggingState = () => {
+	return new Promise((resolve, reject) => {
+		chrome.storage.local.get(['logging'], result => {
+			resolve(result);
+		});
+	});
+};
+
+const setLoggingState = state => {
+	chrome.storage.local.set({ logging: state }, () => {
+		console.log(`chrome.storage API -> logging was turned ${state}`);
+	});
+};
 
 const toggleLoggingState = () => {
-	let state = getLoggingState();
-	if (!state || state === '') {
-		setLoggingState('off');
-	} else {
-		state === 'off' ? setLoggingState('on') : setLoggingState('off');
-	}
+	getLoggingState().then(result => {
+		if (result.logging === 'off') {
+			setLoggingState('on');
+		} else {
+			setLoggingState('off');
+		}
+		updateSpan();
+	});
 };
 
-const updateSpan = () => {
-	let state = getLoggingState();
-	if (!state || state === '') {
-		setLoggingState('off');
-	}
-	document.getElementById('onoff').innerText = state;
-};
+const updateSpan = () => getLoggingState().then(result => $('#onoff').text(result.logging));
 
-document.addEventListener('DOMContentLoaded', updateSpan);
-document.getElementById('toggleLogging').addEventListener('click', toggleLoggingState);
+$(document).ready(function() {
+	$('#toggleLogging').click(() => {
+		toggleLoggingState();
+	});
+
+	updateSpan();
+	$('.tooltipped').tooltip();
+});
