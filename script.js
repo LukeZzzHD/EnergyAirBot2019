@@ -75,6 +75,9 @@ function waitForEl(selector, callback) {
 
 //solve the question with the qna object and select the right answer
 function solve() {
+	if($("#app > div > div.main > div > div > h1").text() === 'Leider verloren') {
+		$("#app > div > div.main > div > div > button").click();
+	}
 	waitForEl('.question-text', () => {
 		var question = $('.question-text')
 			.text()
